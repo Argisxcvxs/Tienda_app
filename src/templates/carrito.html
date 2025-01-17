@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrito de Compras</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h1>Carrito de Compras</h1>
+    <ul>
+        {% for venta in ventas %}
+            <li>Venta ID: {{ venta.id_venta }} - Fecha: {{ venta.fecha }}</li>
+            <ul>
+                {% for detalle in venta.detalles %}
+                    <li>Producto: {{ detalle.producto.nombre }} - Cantidad: {{ detalle.cantidad }} - Precio Unitario: {{ detalle.precio_unitario }}</li>
+                {% endfor %}
+            </ul>
+        {% endfor %}
+    </ul>
+    <a href="{{ url_for('mostrar_productos') }}">Seguir Comprando</a>
+</body>
+</html>
