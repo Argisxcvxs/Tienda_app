@@ -3,16 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Catálogo de Productos</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <title>Catálogo</title>
 </head>
 <body>
     <h1>Catálogo de Productos</h1>
     <ul>
         {% for producto in productos %}
-            <li>{{ producto.nombre }}</li>
+            <li>
+                <h3>{{ producto.nombre }}</h3>
+                <p>{{ producto.descripcion }}</p>
+                <p>Precio: ${{ producto.precio }}</p>
+                <form action="{{ url_for('agregar_al_carrito', id_producto=producto.id_producto) }}" method="post">
+                    <button type="submit">Agregar al carrito</button>
+                </form>
+            </li>
         {% endfor %}
     </ul>
-    <a href="{{ url_for('carrito') }}">Ver Carrito</a>
+    <a href="{{ url_for('index') }}">Volver al inicio</a>
 </body>
 </html>

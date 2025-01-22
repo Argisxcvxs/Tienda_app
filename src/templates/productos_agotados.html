@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Productos Agotados</title>
+</head>
+<body>
+    <h1>Productos Agotados</h1>
+    <ul>
+        {% for producto in productos %}
+            <li>{{ producto.nombre }} - {{ producto.precio }} - Stock: 0</li>
+        {% else %}
+            <li>No hay productos agotados.</li>
+        {% endfor %}
+    </ul>
+    <a href="{{ url_for('admin_index') }}">Volver al Panel de Administración</a>
+</body>
+</html>

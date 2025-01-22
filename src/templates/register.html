@@ -3,26 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registro de Usuario</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <title>Registro</title>
 </head>
 <body>
     <h1>Registro de Usuario</h1>
-    <form method="POST">
+    <form action="{{ url_for('register') }}" method="post">
         <label for="nombre">Nombre de Usuario:</label>
-        <input type="text" id="nombre" name="nombre" required><br>
-        
+        <input type="text" name="nombre" required><br>
+
         <label for="correo_electronico">Correo Electrónico:</label>
-        <input type="email" id="correo_electronico" name="correo_electronico" required><br>
-        
+        <input type="email" name="correo_electronico" required><br>
+
         <label for="contrasena">Contraseña:</label>
-        <input type="password" id="contrasena" name="contrasena" required><br>
-        
+        <input type="password" name="contrasena" required><br>
+
         <button type="submit">Registrar</button>
     </form>
 
-    <br><br>
-
-    <p>¿Ya tienes cuenta? <a href="{{ url_for('login') }}">Inicia sesión aquí</a></p>
+    <p>¿Ya tienes cuenta? <a href="{{ url_for('login') }}">Iniciar sesión</a></p>
 </body>
 </html>
