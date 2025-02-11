@@ -7,13 +7,25 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
-    <h1>Panel de Administración</h1>
-    <nav>
-        <ul>
-            <li><a href="{{ url_for('admin_ventas') }}">Ventas</a></li>
-            <li><a href="{{ url_for('admin_proveedores') }}">Proveedores</a></li>
-            <li><a href="{{ url_for('admin_productos') }}">Productos</a></li>
-        </ul>
-    </nav>
+    <header>
+        <nav>
+            <a href="/admin">Panel de Administración</a>
+        </nav>
+    </header>
+
+    <main>
+        <div class="panel-container">
+            <h1>Panel de Administración</h1>
+            <nav>
+                <ul class="admin-nav">
+                    <li><a href="{{ url_for('admin_ventas') }}">Ventas</a></li>
+                    <li><a href="{{ url_for('admin_proveedores') }}">Proveedores</a></li>
+                    <li><a href="{{ url_for('admin_productos') }}">Productos</a></li>
+                    <li><a href="{{ url_for('add_product_form') }}">Agregar producto</a></li>
+                    <li><a href="{{ url_for('add_supplier_form') }}">Agregar proveedor</a></li>
+                </ul>
+            </nav>
+        </div>
+    </main>
 </body>
 </html>
