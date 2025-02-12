@@ -141,6 +141,7 @@ def admin_proveedores():
     proveedores = Proveedor.query.all()
     return render_template('admin_proveedores.html', proveedores=proveedores)
 
+#ruta para la ventas de los productos
 @app.route('/admin/ventas', methods=['GET'])
 def admin_ventas():
     if 'usuario_id' not in session or not session.get('is_admin'):
