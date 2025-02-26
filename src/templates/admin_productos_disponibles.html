@@ -27,10 +27,12 @@
                         <td class="px-6 py-4 whitespace-nowrap">{{ producto.id_producto }}</td>
                         <td class="px-6 py-4 whitespace-nowrap font-medium text-gray-900">{{ producto.nombre }}</td>
                         <td class="px-6 py-4 whitespace-nowrap">
-                            <img src="{{ url_for('static', filename=producto.foto) }}" 
-                                 alt="{{ producto.nombre }}" 
-                                 class="w-24 h-24 object-cover cursor-pointer rounded-full shadow-sm hover:opacity-75 transition duration-300"
-                                 data-image-url="{{ url_for('static', filename=producto.foto) }}">
+                            <div class="w-24 h-24 relative">
+                                <img src="{{ url_for('static', filename=producto.foto) }}" 
+                                     alt="{{ producto.nombre }}" 
+                                     class="product-image w-full h-full object-cover rounded-lg shadow-sm hover:opacity-75 transition duration-300 cursor-pointer"
+                                     data-image-url="{{ url_for('static', filename=producto.foto) }}">
+                            </div>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">{{ producto.stock }}</td>
                         <td class="px-6 py-4">{{ producto.descripcion }}</td>
@@ -38,7 +40,9 @@
                         <td class="px-6 py-4 whitespace-nowrap">
                             <form action="{{ url_for('eliminar_producto', producto_id=producto.id_producto) }}" method="POST" style="display:inline;">
                                 <button type="submit" 
-                                        class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg shadow-md hover:shadow-lg transition duration-200">
+                                        class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg shadow-md hover:shadow-lg transition duration-200"
+                                        title="Eliminar del catálogo pero conservar datos de ventas"
+                                        onclick="return confirm('¿Estás seguro de que deseas eliminar este producto del catálogo?')">
                                     Eliminar
                                 </button>
                             </form>
@@ -61,7 +65,7 @@
     </div>
 
     <script>
-        // Seleccionar todas las imágenes de productos
+        // Mostrar modal con imagen ampliada
         document.querySelectorAll('.product-image').forEach(function(img) {
             img.addEventListener('click', function() {
                 const modal = document.getElementById('imageModal');
@@ -72,14 +76,14 @@
             });
         });
 
-        // Función para cerrar el modal
+        // Cerrar modal
         function closeModal() {
             const modal = document.getElementById('imageModal');
             modal.classList.add('hidden');
             modal.classList.remove('flex');
         }
 
-        // Event listeners
+        // Event listeners para cerrar modal
         document.getElementById('closeModal').addEventListener('click', closeModal);
         document.getElementById('imageModal').addEventListener('click', function(event) {
             if (event.target === this) {

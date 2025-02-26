@@ -9,13 +9,17 @@
 <body>
     <header>
         <nav>
-            <a href="/admin">Panel de Administración</a>
+            <div class="nav-left">
+                <a href="/admin">Panel de Administración</a>
+            </div>
+            <div class="nav-right">
+                <a href="{{ url_for('login') }}"> inicio</a>
+            </div>
         </nav>
     </header>
 
     <main>
         <div class="panel-container">
-        
             <nav>
                 <ul class="admin-nav">
                     <li><a href="{{ url_for('admin_ventas') }}">Ventas</a></li>
@@ -23,6 +27,7 @@
                     <li><a href="{{ url_for('admin_productos') }}">Productos</a></li>
                     <li><a href="{{ url_for('add_product_form') }}">Agregar producto</a></li>
                     <li><a href="{{ url_for('add_supplier_form') }}">Agregar proveedor</a></li>
+                    <li><a href="{{ url_for('lista_facturas') }}">Facturas</a></li>
                 </ul>
             </nav>
         </div>

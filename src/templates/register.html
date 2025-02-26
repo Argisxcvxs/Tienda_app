@@ -4,22 +4,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
-    <h1>Registro de Usuario</h1>
-    <form action="{{ url_for('register') }}" method="post">
-        <label for="nombre">Nombre de Usuario:</label>
-        <input type="text" name="nombre" required><br>
+    <main>
+        <div class="form-container">
+            <h1>Registro de Usuario</h1>
+            <form action="{{ url_for('register') }}" method="post">
+                <div class="form-group">
+                    <label for="nombre">Nombre de Usuario:</label>
+                    <input type="text" name="nombre" id="nombre" required>
+                </div>
 
-        <label for="correo_electronico">Correo Electrónico:</label>
-        <input type="email" name="correo_electronico" required><br>
+                <div class="form-group">
+                    <label for="correo_electronico">Correo Electrónico:</label>
+                    <input type="email" name="correo_electronico" id="correo_electronico" required>
+                </div>
 
-        <label for="contrasena">Contraseña:</label>
-        <input type="password" name="contrasena" required><br>
+                <div class="form-group">
+                    <label for="contrasena">Contraseña:</label>
+                    <input type="password" name="contrasena" id="contrasena" required>
+                </div>
 
-        <button type="submit">Registrar</button>
-    </form>
+                <button type="submit">Registrar</button>
+            </form>
 
-    <p>¿Ya tienes cuenta? <a href="{{ url_for('login') }}">Iniciar sesión</a></p>
+            <p>¿Ya tienes cuenta? <a href="{{ url_for('login') }}" class="button-link">Iniciar sesión</a></p>
+        </div>
+    </main>
 </body>
 </html>

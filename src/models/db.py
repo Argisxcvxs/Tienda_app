@@ -54,19 +54,21 @@ class Venta(db.Model):
     id_cliente = db.Column(db.Integer, db.ForeignKey('clientes.id_cliente'), nullable=False)
     fecha_venta = db.Column(db.DateTime, nullable=False)
     total = db.Column(db.Float, nullable=False)
+    estado = db.Column(db.String(50), nullable=False, default='carrito')
     cliente = db.relationship('Cliente', backref=db.backref('ventas', lazy=True))
+    detalles = db.relationship('DetalleVenta', backref='venta', lazy=True)
 
 # Modelo de detalles de ventas
 class DetalleVenta(db.Model):
     __tablename__ = 'detalles_venta'
     id_detalle_venta = db.Column(db.Integer, primary_key=True)
     id_venta = db.Column(db.Integer, db.ForeignKey('ventas.id_venta'), nullable=False)
-    id_producto = db.Column(db.Integer, db.ForeignKey('productos.id_producto'), nullable=False)
+    id_producto = db.Column(db.Integer, db.ForeignKey('productos.id_producto'), nullable=True)
     cantidad = db.Column(db.Integer, nullable=False)
     precio_unitario = db.Column(db.Float, nullable=False)
     subtotal = db.Column(db.Float, nullable=False)
-    venta = db.relationship('Venta', backref=db.backref('detalles', lazy=True))
-    producto = db.relationship('Producto', backref=db.backref('detalles', lazy=True))
+    nombre_producto = db.Column(db.String(255), nullable=False)
+    producto = db.relationship('Producto', backref=db.backref('detalles_venta', lazy=True))
 
 # Modelo de facturas
 class Factura(db.Model):
