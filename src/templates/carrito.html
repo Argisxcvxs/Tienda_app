@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tu Carrito</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            text-align: left;
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #2c3e50;
+            color: white;
+        }
+        .boton {
+            text-decoration: none;
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: white;
+            border-radius: 5px;
+            font-size: 1em;
+        }
+        .boton:hover {
+            background-color: #218838;
+        }
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            max-width: 500px;
+        }
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .modal-header h2 {
+            margin: 0;
+            font-size: 1.5em;
+        }
+        .modal-header .close {
+            font-size: 1.5em;
+            cursor: pointer;
+        }
+        .modal-body p {
+            font-size: 1em;
+            margin: 10px 0;
+        }
+        .modal-body label {
+            display: block;
+            margin-top: 15px;
+            font-size: 1em;
+        }
+        .modal-body .info {
+            font-size: 1em;
+            margin-top: 10px;
+            color: #333;
+        }
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        }
+        .show {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="{{ url_for('catalogo') }}">Catálogo</a>
+        </nav>
+    </header>
+    <main>
+        <h2>Tu Carrito</h2>
+        {% if detalles %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Producto</th>
+                        <th>Precio Unitario</th>
+                        <th>Subtotal</th>
+                        <th>Acción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for detalle in detalles %}
+                        <tr>
+                            <td>{{ detalle.nombre_producto }}</td>
+                            <td>${{ "%.2f"|format(detalle.precio_unitario) }}</td>
+                            <td>${{ "%.2f"|format(detalle.subtotal) }}</td>
+                            <td>
+                                <form action="{{ url_for('procesar_compra') }}" method="POST">
+                                    <button type="submit" class="boton">Comprar</button>
+                                </form>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>No tienes productos en el carrito.</p>
+            <a href="{{ url_for('catalogo') }}" class="boton">Ir al Catálogo</a>
+        {% endif %}
+    </main>
+    <!-- Ventana modal -->
+    {% if mostrar_factura %}
+    <div class="modal-overlay show"></div>
+    <div class="modal show">
+        <div class="modal-header">
+            <h2>Factura de Compra</h2>
+            <span class="close" onclick="closeModal()">&times;</span>
+        </div>
+        <div class="modal-body">
+            <p><strong>Precio Total:</strong> ${{ "%.2f"|format(total) }}</p>
+            <p><strong>Fecha:</strong> {{ fecha }}</p>
+            <p><strong>Nombre del Comprador:</strong> {{ comprador }}</p>
+            <p><strong>ID de la Factura:</strong> {{ id_factura }}</p>
+            <p class="info"><strong>Banco Destinatario:</strong> Bancolombia</p>
+            <p class="info"><strong>Número de Cuenta:</strong> 1234-5678-9012-3456</p>
+            <p class="info">Por favor, realice la transferencia y guarde su comprobante.</p>
+        </div>
+    </div>
+    {% endif %}
+    <script>
+        function closeModal() {
+            document.querySelector('.modal').classList.remove('show');
+            document.querySelector('.modal-overlay').classList.remove('show');
+        }
+    </script>
+</body>
+</html>

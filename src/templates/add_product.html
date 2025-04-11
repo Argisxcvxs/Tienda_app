@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agregar Producto</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="/admin">Panel de Administración</a>
+        </nav>
+    </header>
+
+    <main>
+        <div class="form-container">
+            <h1>Agregar Producto</h1>
+            <form action="{{ url_for('add_product') }}" method="POST" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="nombre">Nombre del Producto:</label>
+                    <input type="text" id="nombre" name="nombre" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="descripcion">Descripción del Producto:</label>
+                    <textarea id="descripcion" name="descripcion" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="precio">Precio del Producto:</label>
+                    <input type="number" id="precio" name="precio" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="foto">Foto del Producto:</label>
+                    <input type="file" id="foto" name="foto" accept="image/*" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="stock">Stock:</label>
+                    <input type="number" id="stock" name="stock" required>
+                </div>
+
+                <div class="form-group">
+                    <button type="submit">Agregar Producto</button>
+                </div>
+            </form>
+
+            <!-- Botón de volver al panel -->
+            <div class="form-group">
+                <a href="{{ url_for('admin_index') }}" class="button-link">
+                    Volver al Panel de Administración
+                </a>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

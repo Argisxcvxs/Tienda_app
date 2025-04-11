@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Administrar Productos</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="/admin">Panel de Administración</a>
+        </nav>
+    </header>
+
+    <main>
+        <div class="form-container">
+            <h1>Administrar Productos</h1>
+            <nav>
+                <ul class="admin-nav">
+                    <li><a href="{{ url_for('productos_disponibles') }}">Productos Disponibles</a></li>
+                    <li><a href="{{ url_for('productos_agotados') }}">Productos Agotados</a></li>
+                    <li><a href="{{ url_for('informe_ventas') }}">Informe de Ventas</a></li>
+                </ul>
+            </nav>
+            <a href="{{ url_for('admin_index') }}" class="button-link">Volver al Panel de Administración</a>
+        </div>
+    </main>
+</body>
+</html>

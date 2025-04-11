@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iniciar Sesión</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <main>
+        <div class="form-container">
+            <h1>Iniciar Sesión</h1>
+
+            <!-- Mensaje de error -->
+            {% if mensaje_error %}
+            <div class="mensaje-error">
+                <p class="error">{{ mensaje_error }}</p>
+            </div>
+            {% endif %}
+
+            <!-- Formulario de inicio de sesión -->
+            <form action="{{ url_for('login') }}" method="post">
+                <div class="form-group">
+                    <label for="correo_electronico">Correo Electrónico:</label>
+                    <input type="email" name="correo_electronico" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="contrasena">Contraseña:</label>
+                    <input type="password" name="contrasena" required>
+                </div>
+
+                <button type="submit">Iniciar sesión</button>
+            </form>
+
+            <!-- Enlace para registro -->
+            <p>¿No tienes cuenta? <a href="{{ url_for('register') }}" class="button-link">Regístrate aquí</a></p>
+        </div>
+    </main>
+</body>
+</html>

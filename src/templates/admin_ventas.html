@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vista Clientes</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="/admin">Panel de Administración</a>
+        </nav>
+    </header>
+
+    <main>
+        <div class="form-container">
+            <h1>Vista De La Venta</h1>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nombre Cliente</th>
+                        <th>Correo Cliente</th>
+                        <th>Producto Comprado</th>
+                        <th>Fecha de Compra</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in cliente_info %}
+                        <tr>
+                            <td>{{ item.cliente.nombre }}</td>
+                            <td>{{ item.cliente.correo }}</td>
+                            <td>
+                                {% for producto in item.productos_comprados %}
+                                    <p>{{ producto.producto }}</p>
+                                {% endfor %}
+                            </td>
+                            <td>
+                                {% for producto in item.productos_comprados %}
+                                    <p>{{ producto.fecha_compra }}</p>
+                                {% endfor %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <a href="{{ url_for('admin_index') }}" class="button-link">Volver al Panel de Administración</a>
+        </div>
+    </main>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proveedores</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="/admin">Panel de Administración</a>
+        </nav>
+    </header>
+
+    <main>
+        <div class="form-container">
+            <h1>Lista de Proveedores</h1>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID  -</th>
+                        <th>Nombre  -</th>
+                        <th>Contacto </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for proveedor in proveedores %}
+                        <tr>
+                            <td>{{ proveedor.id_proveedor }}</td>
+                            <td>{{ proveedor.nombre }}</td>
+                            <td>{{ proveedor.contacto }}</td>
+                            <td>
+                                <!-- Formulario para eliminar un proveedor -->
+                                <form action="{{ url_for('eliminar_proveedor', proveedor_id=proveedor.id_proveedor) }}" method="POST" style="display:inline;">
+                                    <button type="submit" class="button-link">Eliminar</button>
+                                </form>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <a href="{{ url_for('admin_index') }}" class="button-link">Volver al Panel de Administración</a>
+        </div>
+    </main>
+</body>
+</html>

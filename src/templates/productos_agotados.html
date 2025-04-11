@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Productos Agotados</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen bg-gray-100 p-8">
+    <div class="max-w-7xl mx-auto">
+        <h1 class="text-3xl font-bold mb-6">Productos Agotados</h1>
+        <div class="bg-white rounded-lg shadow-lg p-6">
+            {% if productos %}
+                <ul class="divide-y divide-gray-200">
+                    {% for producto in productos %}
+                        <li class="flex items-center justify-between py-4">
+                            <div class="flex items-center">
+                                <img src="{{ url_for('static', filename=producto.foto) }}" 
+                                     alt="{{ producto.nombre }}" 
+                                     class="w-16 h-16 object-cover rounded-md mr-4">
+                                <div>
+                                    <p class="text-lg font-semibold">{{ producto.nombre }}</p>
+                                    <p class="text-sm text-gray-600">Precio: ${{ producto.precio }}</p>
+                                    <p class="text-sm text-red-600 font-bold">Stock: 0</p>
+                                </div>
+                            </div>
+                            <form action="{{ url_for('eliminar_producto', producto_id=producto.id_producto) }}" 
+                                  method="POST" class="inline">
+                                <button type="submit" 
+                                        class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+                                    Eliminar
+                                </button>
+                            </form>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p class="text-gray-600">No hay productos agotados.</p>
+            {% endif %}
+        </div>
+        <a href="{{ url_for('admin_index') }}" 
+           class="mt-4 inline-flex items-center px-4 py-2 bg-gray-800 hover:bg-gray-700 text-white font-bold rounded">
+            Volver al Panel de Administración
+        </a>
+    </div>
+</body>
+</html>

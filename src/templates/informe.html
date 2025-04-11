@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Informe de Ventas</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="/admin">Panel de Administración</a>
+        </nav>
+    </header>
+
+    <main>
+        <div class="form-container">
+            <h1>Informe de Ventas</h1>
+
+            <!-- Formulario para seleccionar el año y mes -->
+            <form method="POST" action="{{ url_for('informe_ventas') }}">
+                <div class="form-group">
+                    <label for="año">Año:</label>
+                    <select name="año" id="año">
+                        <option value="{{ año }}" selected>{{ año }}</option>
+                        <option value="{{ año - 1 }}">{{ año - 1 }}</option>
+                        <option value="{{ año + 1 }}">{{ año + 1 }}</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="mes">Mes:</label>
+                    <select name="mes" id="mes">
+                        <option value="1" {% if mes == 1 %}selected{% endif %}>Enero</option>
+                        <option value="2" {% if mes == 2 %}selected{% endif %}>Febrero</option>
+                        <option value="3" {% if mes == 3 %}selected{% endif %}>Marzo</option>
+                        <option value="4" {% if mes == 4 %}selected{% endif %}>Abril</option>
+                        <option value="5" {% if mes == 5 %}selected{% endif %}>Mayo</option>
+                        <option value="6" {% if mes == 6 %}selected{% endif %}>Junio</option>
+                        <option value="7" {% if mes == 7 %}selected{% endif %}>Julio</option>
+                        <option value="8" {% if mes == 8 %}selected{% endif %}>Agosto</option>
+                        <option value="9" {% if mes == 9 %}selected{% endif %}>Septiembre</option>
+                        <option value="10" {% if mes == 10 %}selected{% endif %}>Octubre</option>
+                        <option value="11" {% if mes == 11 %}selected{% endif %}>Noviembre</option>
+                        <option value="12" {% if mes == 12 %}selected{% endif %}>Diciembre</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <button type="submit">Ver Informe</button>
+                </div>
+            </form>
+
+            <!-- Tabla de ventas -->
+            {% if mostrar_informe %}
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Cliente  -</th>
+                            <th>Producto  -</th>
+                            <th>Cantidad  -</th>
+                            <th>Total  -</th>
+                            <th>Fecha</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for venta in ventas %}
+                            {% for detalle in venta.detalles %}
+                                <tr>
+                                    <td>{{ venta.cliente.nombre }}</td>  <!-- Nombre del cliente -->
+                                    <td>{{ detalle.producto.nombre }}</td> <!-- Producto vendido -->
+                                    <td>{{ detalle.cantidad }}</td>  <!-- Cantidad vendida -->
+                                    <td>{{ detalle.subtotal }}</td>  <!-- Total de la venta -->
+                                    <td>{{ venta.fecha_venta }}</td>  <!-- Fecha de la venta -->
+                                </tr>
+                            {% endfor %}
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% endif %}
+        </div>
+
+        <!-- Enlace para volver al Panel de Administración -->
+        <a href="{{ url_for('admin_index') }}" class="button-link">Volver al Panel de Administración</a>
+    </main>
+</body>
+</html>

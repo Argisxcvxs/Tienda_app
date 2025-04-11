@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Productos Disponibles</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen bg-gray-100 p-8">
+    <div class="max-w-7xl mx-auto">
+        <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+            <table class="min-w-full divide-y divide-gray-200">
+                <thead class="bg-gray-50">
+                    <tr>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nombre</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Foto</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Stock</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Descripción</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Precio</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody class="bg-white divide-y divide-gray-200">
+                    {% for producto in productos %}
+                    <tr class="hover:bg-gray-50">
+                        <td class="px-6 py-4 whitespace-nowrap">{{ producto.id_producto }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap font-medium text-gray-900">{{ producto.nombre }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <div class="w-24 h-24 relative">
+                                <img src="{{ url_for('static', filename=producto.foto) }}" 
+                                     alt="{{ producto.nombre }}" 
+                                     class="product-image w-full h-full object-cover rounded-lg shadow-sm hover:opacity-75 transition duration-300 cursor-pointer"
+                                     data-image-url="{{ url_for('static', filename=producto.foto) }}">
+                            </div>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">{{ producto.stock }}</td>
+                        <td class="px-6 py-4">{{ producto.descripcion }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap font-semibold text-gray-700">${{ producto.precio }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <form action="{{ url_for('eliminar_producto', producto_id=producto.id_producto) }}" method="POST" style="display:inline;">
+                                <button type="submit" 
+                                        class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg shadow-md hover:shadow-lg transition duration-200"
+                                        title="Eliminar del catálogo pero conservar datos de ventas"
+                                        onclick="return confirm('¿Estás seguro de que deseas eliminar este producto del catálogo?')">
+                                    Eliminar
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <a href="{{ url_for('admin_index') }}" class="mt-4 inline-flex items-center px-4 py-2 bg-gray-800 hover:bg-gray-700 text-white font-bold rounded-lg shadow-md hover:shadow-lg transition duration-200">
+            Volver al Panel de Administración
+        </a>
+    </div>
+
+    <!-- Modal para mostrar imagen -->
+    <div id="imageModal" class="fixed inset-0 bg-black bg-opacity-70 items-center justify-center z-50 hidden">
+        <button id="closeModal" class="absolute top-5 right-5 text-white hover:text-gray-300 text-3xl">&times;</button>
+        <img id="modalImage" src="" alt="Producto ampliado" class="max-w-[80%] max-h-[80vh] object-contain mx-auto mt-[10vh] transition-transform duration-300 ease-in-out">
+    </div>
+
+    <script>
+        // Mostrar modal con imagen ampliada
+        document.querySelectorAll('.product-image').forEach(function(img) {
+            img.addEventListener('click', function() {
+                const modal = document.getElementById('imageModal');
+                const modalImage = document.getElementById('modalImage');
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+                modalImage.src = this.getAttribute('data-image-url');
+            });
+        });
+
+        // Cerrar modal
+        function closeModal() {
+            const modal = document.getElementById('imageModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        // Event listeners para cerrar modal
+        document.getElementById('closeModal').addEventListener('click', closeModal);
+        document.getElementById('imageModal').addEventListener('click', function(event) {
+            if (event.target === this) {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>
