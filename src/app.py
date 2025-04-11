@@ -572,7 +572,6 @@ def vaciar_carrito():
         return redirect(url_for('carrito'))
 
 
-# Ejecutar la aplicación
+# Ejecutar la aplicación con Waitress
 if __name__ == '__main__':
-    app.run(debug=True)
-
+    serve(app, host='0.0.0.0', port=8080)
